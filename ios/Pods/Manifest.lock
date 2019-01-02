@@ -1,0 +1,37 @@
+PODS:
+  - Analytics (3.6.9)
+  - React (0.57.8):
+    - React/Core (= 0.57.8)
+  - React/Core (0.57.8):
+    - yoga (= 0.57.8.React)
+  - RNAnalytics (0.0.1-beta.3):
+    - Analytics
+    - React
+  - yoga (0.57.8.React)
+
+DEPENDENCIES:
+  - React (from `../node_modules/react-native`)
+  - "RNAnalytics (from `../node_modules/@segment/analytics-react-native`)"
+  - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Analytics
+
+EXTERNAL SOURCES:
+  React:
+    :path: "../node_modules/react-native"
+  RNAnalytics:
+    :path: "../node_modules/@segment/analytics-react-native"
+  yoga:
+    :path: "../node_modules/react-native/ReactCommon/yoga"
+
+SPEC CHECKSUMS:
+  Analytics: 6541ce337e99d9f7a2240a8b3953940a7be5f998
+  React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
+  RNAnalytics: e48fd2e561459802621750097c7ead245ea09b6a
+  yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
+
+PODFILE CHECKSUM: c3e90e3eff99def602ec4bb8ce2c13dbfc99cb8b
+
+COCOAPODS: 1.5.3
