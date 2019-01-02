@@ -10,8 +10,6 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Image} from 'react-native';
 import { Button } from 'react-native-elements';
 import analytics from '@segment/analytics-react-native';
-// import logo from './logo.png';
-
 
 
 const instructions = Platform.select({
@@ -25,7 +23,7 @@ type Props = {};
 export default class App extends Component<Props> {
 
   componentWillMount() {
-     analytics.setup('BC1V3jcBqQcwb2TNeuTKcXkbA4ujOyzJ', {
+     analytics.setup('WRITE_KEY_GOES_HERE', {
       // Record screen views automatically!
       // recordScreenViews: true,
       // Record certain application events automatically!
@@ -118,5 +116,4 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#46B67E',
   }
-
 });
