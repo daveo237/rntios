@@ -23,7 +23,7 @@ type Props = {};
 export default class App extends Component<Props> {
 
   componentWillMount() {
-     analytics.setup('WRITE_KEY_GOES_HERE', {
+     analytics.setup('ilrQLGpSKvTLr1iuBuKjSH3wwBD7RDOh', {
       // Record screen views automatically!
       // recordScreenViews: true,
       // Record certain application events automatically!
@@ -58,6 +58,14 @@ export default class App extends Component<Props> {
       illustrator: 'Sara Pichelli '
     })
   }
+  
+  flushPress = () => {
+    analytics.flush()
+  }
+  
+  resetPress = () => {
+    analytics.reset();
+  }
 
   render() {
 
@@ -88,6 +96,16 @@ export default class App extends Component<Props> {
             buttonStyle={styles.button}
             onPress={() => this.screenPress()}
             title="Screen"
+          />
+          <Button
+            buttonStyle={styles.button}
+            onPress={() => this.flushPress()}
+            title="Flush"
+          />
+          <Button
+            buttonStyle={styles.button}
+            onPress={() => this.resetPress()}
+            title="Reset"
           />
         </View>
       </View>
