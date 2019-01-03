@@ -23,7 +23,7 @@ type Props = {};
 export default class App extends Component<Props> {
 
   componentWillMount() {
-     analytics.setup('ilrQLGpSKvTLr1iuBuKjSH3wwBD7RDOh', {
+     analytics.setup('<Your write key goes here>', {
       // Record screen views automatically!
       // recordScreenViews: true,
       // Record certain application events automatically!
