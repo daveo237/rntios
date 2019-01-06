@@ -24,9 +24,9 @@ export default class App extends Component {
     super(props);
     this.state = {
       user: {
-        userId: '123',
-        email: 'test@example.com',
-        name: 'Mr. Peanut Butter'
+        userId: '742',
+        email: 'homer@snpp.com',
+        name: 'Homer Simpson'
       },
       showIdentifySettings: false,
       input: {
@@ -37,7 +37,7 @@ export default class App extends Component {
     }
   }
   componentWillMount() {
-     analytics.setup('ilrQLGpSKvTLr1iuBuKjSH3wwBD7RDOh', {
+     analytics.setup('<Your write key goes here>', {
       // Record screen views automatically!
       // recordScreenViews: true,
       // Record certain application events automatically!
@@ -81,53 +81,72 @@ export default class App extends Component {
     analytics.reset();
   }
 
-  identifySettingsPress() {
+  identifySettingsToggle() {
     this.setState(previousState => (
       { showIdentifySettings: !previousState.showIdentifySettings }
     ))
   }
 
   saveIdentifySettings() {
-    let user = this.state.user;
-    user.userId = this.state.input.userId;
+    let user = {
+      userId: this.state.input.userId,
+      email: this.state.input.email,
+      name: this.state.input.name,
+    }
     this.setState({ user });
-    this.identifySettingsPress();
+    this.identifySettingsToggle();
   }
 
   render() {
-    if (this.state.showIdentifySettings) {
+    if (!this.state.showIdentifySettings) {
       return (
         <View style={styles.container}>
-      <Image
-      style={{alignSelf: 'center'}}
-      source={require('./logo.png')}
-      />
-        <View style={styles.buttonContainer}>
-          <Text style={styles.instructions}>{instructions}</Text>
-          <TextInput
-            style={{height: 40, backgroundColor: 'white'}}
-            title='User ID'
-            placeholder="123"
-            onChangeText={(text) => {
-              let input = this.state.input;
-              input.userId = text;
-              this.setState({input})}
-            }
-          />
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => this.saveIdentifySettings()}
-            title="Save"
-          />
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => this.identifySettingsPress()}
-            title="Cancel"
-          />
+        <Image
+        style={{alignSelf: 'center'}}
+        source={require('./logo.png')}
+        />
+          <View style={styles.buttonContainer}>
+            <Text style={styles.instructions}>{instructions}</Text>
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.track1Press()}
+              title="Track 1"
+            />
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.track2Press()}
+              title="Track 2"
+            />
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.identifyPress()}
+              title="Identify"
+            />
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.screenPress()}
+              title="Screen"
+            />
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.flushPress()}
+              title="Flush"
+            />
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.resetPress()}
+              title="Reset"
+            />
+            <Button
+              onPress={() => this.identifySettingsToggle()}
+              title="Identify Settings"
+            />
+          </View>
         </View>
-      </View>
       );
     }
+    
+    //  Identify Settings 
     return (
       <View style={styles.container}>
       <Image
@@ -135,45 +154,50 @@ export default class App extends Component {
       source={require('./logo.png')}
       />
         <View style={styles.buttonContainer}>
-          <Text style={styles.instructions}>{instructions}</Text>
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => this.track1Press()}
-            title="Track 1"
+          <Text style={styles.inputTitle}>User ID</Text>
+          <TextInput
+            style={styles.inputField}
+            placeholder="1234"
+            onChangeText={(text) => {
+              let input = this.state.input;
+              input.userId = text;
+              this.setState({input})}
+            }
           />
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => this.track2Press()}
-            title="Track 2"
+          <Text style={styles.inputTitle}>Email</Text>
+          <TextInput
+            style={styles.inputField}
+            placeholder="test@example.com"
+            onChangeText={(text) => {
+              let input = this.state.input;
+              input.email = text;
+              this.setState({input})}
+            }
           />
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => this.identifyPress()}
-            title="Identify"
+          <Text style={styles.inputTitle}>Name</Text>
+          <TextInput
+            style={styles.inputField}
+            placeholder="Jimbo Jones"
+            onChangeText={(text) => {
+              let input = this.state.input;
+              input.name = text;
+              this.setState({input})}
+            }
           />
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => this.screenPress()}
-            title="Screen"
-          />
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => this.flushPress()}
-            title="Flush"
-          />
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => this.resetPress()}
-            title="Reset"
-          />
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => this.identifySettingsPress()}
-            title="Identify Settings"
-          />
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.saveIdentifySettings()}
+              title="Save"
+            />
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.identifySettingsToggle()}
+              title="Cancel"
+            />
+          </View>
         </View>
-      </View>
     );
+    
   }
 }
 
@@ -197,5 +221,14 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#46B67E',
+  },
+  inputField: {
+    backgroundColor: '#FFF',
+    height: '9%',
+    marginTop: '-8%'
+  },
+  inputTitle: {
+    color: '#FFF',
+    fontSize: 20
   }
 });
