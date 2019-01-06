@@ -98,13 +98,23 @@ export default class App extends Component {
   }
 
   render() {
+    // if (this.state.input.userId) {}
+    let user = '';
+    if (this.state.input.userId) {
+      user = " (" + this.state.user.userId.substring(0, 15);
+      if (this.state.input.userId.length > 15) {
+        user += "...)";
+      } else {
+        user += ")";
+      }
+    }
     if (!this.state.showIdentifySettings) {
       return (
         <View style={styles.container}>
-        <Image
-        style={{alignSelf: 'center'}}
-        source={require('./logo.png')}
-        />
+          <Image
+            style={{alignSelf: 'center'}}
+            source={require('./logo.png')}
+          />
           <View style={styles.buttonContainer}>
             <Text style={styles.instructions}>{instructions}</Text>
             <Button
@@ -120,7 +130,7 @@ export default class App extends Component {
             <Button
               buttonStyle={styles.button}
               onPress={() => this.identifyPress()}
-              title="Identify"
+              title={"Identify " + user}
             />
             <Button
               buttonStyle={styles.button}
@@ -153,49 +163,49 @@ export default class App extends Component {
       style={{alignSelf: 'center'}}
       source={require('./logo.png')}
       />
-        <View style={styles.buttonContainer}>
-          <Text style={styles.inputTitle}>User ID</Text>
-          <TextInput
-            style={styles.inputField}
-            placeholder="1234"
-            onChangeText={(text) => {
-              let input = this.state.input;
-              input.userId = text;
-              this.setState({input})}
-            }
+      <View style={styles.buttonContainer}>
+        <Text style={styles.inputTitle}>User ID</Text>
+        <TextInput
+          style={styles.inputField}
+          placeholder={this.state.user.userId}
+          onChangeText={(text) => {
+            let input = this.state.input;
+            input.userId = text;
+            this.setState({input})}
+          }
+        />
+        <Text style={styles.inputTitle}>Email</Text>
+        <TextInput
+          style={styles.inputField}
+          placeholder={this.state.user.email}
+          onChangeText={(text) => {
+            let input = this.state.input;
+            input.email = text;
+            this.setState({input})}
+          }
+        />
+        <Text style={styles.inputTitle}>Name</Text>
+        <TextInput
+          style={styles.inputField}
+          placeholder={this.state.user.name}
+          onChangeText={(text) => {
+            let input = this.state.input;
+            input.name = text;
+            this.setState({input})}
+          }
+        />
+          <Button
+            buttonStyle={styles.button}
+            onPress={() => this.saveIdentifySettings()}
+            title="Save"
           />
-          <Text style={styles.inputTitle}>Email</Text>
-          <TextInput
-            style={styles.inputField}
-            placeholder="test@example.com"
-            onChangeText={(text) => {
-              let input = this.state.input;
-              input.email = text;
-              this.setState({input})}
-            }
+          <Button
+            buttonStyle={styles.button}
+            onPress={() => this.identifySettingsToggle()}
+            title="Cancel"
           />
-          <Text style={styles.inputTitle}>Name</Text>
-          <TextInput
-            style={styles.inputField}
-            placeholder="Jimbo Jones"
-            onChangeText={(text) => {
-              let input = this.state.input;
-              input.name = text;
-              this.setState({input})}
-            }
-          />
-            <Button
-              buttonStyle={styles.button}
-              onPress={() => this.saveIdentifySettings()}
-              title="Save"
-            />
-            <Button
-              buttonStyle={styles.button}
-              onPress={() => this.identifySettingsToggle()}
-              title="Cancel"
-            />
-          </View>
         </View>
+      </View>
     );
     
   }
