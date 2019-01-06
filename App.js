@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image} from 'react-native';
+import {Platform, StyleSheet, Text, View, Image, TextInput} from 'react-native';
 import { Button } from 'react-native-elements';
 import analytics from '@segment/analytics-react-native';
 
@@ -87,6 +87,13 @@ export default class App extends Component {
     ))
   }
 
+  saveIdentifySettings() {
+    let user = this.state.user;
+    user.userId = this.state.input.userId;
+    this.setState({ user });
+    this.identifySettingsPress();
+  }
+
   render() {
     if (this.state.showIdentifySettings) {
       return (
@@ -97,10 +104,25 @@ export default class App extends Component {
       />
         <View style={styles.buttonContainer}>
           <Text style={styles.instructions}>{instructions}</Text>
+          <TextInput
+            style={{height: 40, backgroundColor: 'white'}}
+            title='User ID'
+            placeholder="123"
+            onChangeText={(text) => {
+              let input = this.state.input;
+              input.userId = text;
+              this.setState({input})}
+            }
+          />
+          <Button
+            buttonStyle={styles.button}
+            onPress={() => this.saveIdentifySettings()}
+            title="Save"
+          />
           <Button
             buttonStyle={styles.button}
             onPress={() => this.identifySettingsPress()}
-            title="Identify Settings"
+            title="Cancel"
           />
         </View>
       </View>
