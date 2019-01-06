@@ -19,11 +19,25 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-type Props = {};
-export default class App extends Component<Props> {
-
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {
+        userId: '123',
+        email: 'test@example.com',
+        name: 'Mr. Peanut Butter'
+      },
+      showIdentifySettings: false,
+      input: {
+        userId: '',
+        email: '',
+        name: ''
+      }
+    }
+  }
   componentWillMount() {
-     analytics.setup('<Your write key goes here>', {
+     analytics.setup('ilrQLGpSKvTLr1iuBuKjSH3wwBD7RDOh', {
       // Record screen views automatically!
       // recordScreenViews: true,
       // Record certain application events automatically!
@@ -46,9 +60,9 @@ export default class App extends Component<Props> {
   }
 
   identifyPress() {
-    analytics.identify('42', {
-      name: 'Miles Morales',
-      email: 'mmorales@midtownhigh.edu'
+    analytics.identify(this.state.user.userId, {
+      name: this.state.user.name,
+      email: this.state.user.email
     });
   }
 
@@ -67,8 +81,31 @@ export default class App extends Component<Props> {
     analytics.reset();
   }
 
-  render() {
+  identifySettingsPress() {
+    this.setState(previousState => (
+      { showIdentifySettings: !previousState.showIdentifySettings }
+    ))
+  }
 
+  render() {
+    if (this.state.showIdentifySettings) {
+      return (
+        <View style={styles.container}>
+      <Image
+      style={{alignSelf: 'center'}}
+      source={require('./logo.png')}
+      />
+        <View style={styles.buttonContainer}>
+          <Text style={styles.instructions}>{instructions}</Text>
+          <Button
+            buttonStyle={styles.button}
+            onPress={() => this.identifySettingsPress()}
+            title="Identify Settings"
+          />
+        </View>
+      </View>
+      );
+    }
     return (
       <View style={styles.container}>
       <Image
@@ -106,6 +143,11 @@ export default class App extends Component<Props> {
             buttonStyle={styles.button}
             onPress={() => this.resetPress()}
             title="Reset"
+          />
+          <Button
+            buttonStyle={styles.button}
+            onPress={() => this.identifySettingsPress()}
+            title="Identify Settings"
           />
         </View>
       </View>
