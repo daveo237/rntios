@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image} from 'react-native';
+import {Platform, StyleSheet, Text, View, Image, TextInput} from 'react-native';
 import { Button } from 'react-native-elements';
 import analytics from '@segment/analytics-react-native';
 
@@ -19,9 +19,23 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-type Props = {};
-export default class App extends Component<Props> {
-
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {
+        userId: '742',
+        email: 'homer@snpp.com',
+        name: 'Homer Simpson'
+      },
+      showIdentifySettings: false,
+      input: {
+        userId: '',
+        email: '',
+        name: ''
+      }
+    }
+  }
   componentWillMount() {
      analytics.setup('<Your write key goes here>', {
       // Record screen views automatically!
@@ -46,9 +60,9 @@ export default class App extends Component<Props> {
   }
 
   identifyPress() {
-    analytics.identify('42', {
-      name: 'Miles Morales',
-      email: 'mmorales@midtownhigh.edu'
+    analytics.identify(this.state.user.userId, {
+      name: this.state.user.name,
+      email: this.state.user.email
     });
   }
 
@@ -67,49 +81,133 @@ export default class App extends Component<Props> {
     analytics.reset();
   }
 
-  render() {
+  identifySettingsToggle() {
+    this.setState(previousState => (
+      { showIdentifySettings: !previousState.showIdentifySettings }
+    ))
+  }
 
+  saveIdentifySettings() {
+    let user = {
+      userId: this.state.input.userId,
+      email: this.state.input.email,
+      name: this.state.input.name,
+    }
+    this.setState({ user });
+    this.identifySettingsToggle();
+  }
+
+  render() {
+    // if (this.state.input.userId) {}
+    let user = '';
+    if (this.state.input.userId) {
+      user = " (" + this.state.user.userId.substring(0, 15);
+      if (this.state.input.userId.length > 15) {
+        user += "...)";
+      } else {
+        user += ")";
+      }
+    }
+    if (!this.state.showIdentifySettings) {
+      return (
+        <View style={styles.container}>
+          <Image
+            style={{alignSelf: 'center'}}
+            source={require('./logo.png')}
+          />
+          <View style={styles.buttonContainer}>
+            <Text style={styles.instructions}>{instructions}</Text>
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.track1Press()}
+              title="Track 1"
+            />
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.track2Press()}
+              title="Track 2"
+            />
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.identifyPress()}
+              title={"Identify " + user}
+            />
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.screenPress()}
+              title="Screen"
+            />
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.flushPress()}
+              title="Flush"
+            />
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.resetPress()}
+              title="Reset"
+            />
+            <Button
+              onPress={() => this.identifySettingsToggle()}
+              title="Identify Settings"
+            />
+          </View>
+        </View>
+      );
+    }
+    
+    //  Identify Settings 
     return (
       <View style={styles.container}>
       <Image
       style={{alignSelf: 'center'}}
       source={require('./logo.png')}
       />
-        <View style={styles.buttonContainer}>
-          <Text style={styles.instructions}>{instructions}</Text>
+      <View style={styles.buttonContainer}>
+        <Text style={styles.inputTitle}>User ID</Text>
+        <TextInput
+          style={styles.inputField}
+          placeholder={this.state.user.userId}
+          onChangeText={(text) => {
+            let input = this.state.input;
+            input.userId = text;
+            this.setState({input})}
+          }
+        />
+        <Text style={styles.inputTitle}>Email</Text>
+        <TextInput
+          style={styles.inputField}
+          placeholder={this.state.user.email}
+          onChangeText={(text) => {
+            let input = this.state.input;
+            input.email = text;
+            this.setState({input})}
+          }
+        />
+        <Text style={styles.inputTitle}>Name</Text>
+        <TextInput
+          style={styles.inputField}
+          placeholder={this.state.user.name}
+          onChangeText={(text) => {
+            let input = this.state.input;
+            input.name = text;
+            this.setState({input})}
+          }
+        />
           <Button
             buttonStyle={styles.button}
-            onPress={() => this.track1Press()}
-            title="Track 1"
+            onPress={() => this.saveIdentifySettings()}
+            title="Save"
           />
           <Button
             buttonStyle={styles.button}
-            onPress={() => this.track2Press()}
-            title="Track 2"
-          />
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => this.identifyPress()}
-            title="Identify"
-          />
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => this.screenPress()}
-            title="Screen"
-          />
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => this.flushPress()}
-            title="Flush"
-          />
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => this.resetPress()}
-            title="Reset"
+            onPress={() => this.identifySettingsToggle()}
+            title="Cancel"
           />
         </View>
       </View>
     );
+    
   }
 }
 
@@ -133,5 +231,14 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#46B67E',
+  },
+  inputField: {
+    backgroundColor: '#FFF',
+    height: '9%',
+    marginTop: '-8%'
+  },
+  inputTitle: {
+    color: '#FFF',
+    fontSize: 20
   }
 });
