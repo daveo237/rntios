@@ -12,7 +12,7 @@ import { Button } from 'react-native-elements';
 import analytics from '@segment/analytics-react-native';
 
 analytics
-  .setup('ilrQLGpSKvTLr1iuBuKjSH3wwBD7RDOh', {
+  .setup('<Your write key goes here>', {
     // using: [Mixpanel, GoogleAnalytics],
     flushAt: 1,
     debug: true,
@@ -116,7 +116,7 @@ export default class App extends Component {
   render() {
     let user = '';
     if (this.state.input.userId) {
-      user = " (" + this.state.user.userId.substring(0, 15);
+      user = "  (" + this.state.user.userId.substring(0, 15);
       if (this.state.input.userId.length > 15) {
         user += "...)";
       } else {
@@ -145,7 +145,7 @@ export default class App extends Component {
             <Button
               buttonStyle={styles.button}
               onPress={() => this.identifyPress()}
-              title={"Identify " + user}
+              title={"Identify" + user}
             />
             <Button
               buttonStyle={styles.button}
