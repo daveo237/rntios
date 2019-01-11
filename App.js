@@ -117,9 +117,9 @@ export default class App extends Component {
 
   saveIdentifySettings() {
     let user = {
-      userId: this.state.input.userId,
-      email: this.state.input.email,
-      name: this.state.input.name,
+      userId: this.state.input.userId || this.state.user.userId,
+      email: this.state.input.email || this.state.user.email,
+      name: this.state.input.name || this.state.user.name,
     }
     this.setState(() => ({ user }));
     this.identifySettingsToggle();
@@ -127,11 +127,11 @@ export default class App extends Component {
 
   saveTrackSettings() {
     let track = {
-      event: this.state.input.event,
-      prop1: this.state.input.prop1,
-      prop2: this.state.input.prop2,
-      value1: this.state.input.value1,
-      value2: this.state.input.value2
+      event: this.state.input.event || this.state.track.event,
+      prop1: this.state.input.prop1 || this.state.track.prop1,
+      prop2: this.state.input.prop2 || this.state.track.prop2,
+      value1: this.state.input.value1 || this.state.track.value1,
+      value2: this.state.input.value2 || this.state.track.value2
     }
     this.setState(() => ({ track }));
     this.trackSettingsToggle();
@@ -264,7 +264,7 @@ export default class App extends Component {
           source={require('./logo.png')}
         />
         <View style={styles.buttonContainer}>
-          <Text style={styles.inputTitle}>Event</Text>
+          <Text style={styles.inputTrackTitle}>Event</Text>
           <TextInput
             style={styles.inputField}
             placeholder={this.state.track.event}
@@ -274,7 +274,7 @@ export default class App extends Component {
               this.setState(() => ({input}))}
             }
           />
-          <Text style={styles.inputTitle}>Property 1</Text>
+          <Text style={styles.inputTrackTitle}>Property 1</Text>
           <TextInput
             style={styles.inputField}
             placeholder={this.state.track.prop1}
@@ -284,7 +284,7 @@ export default class App extends Component {
               this.setState(() => ({input}))}
             }
           />
-          <Text style={styles.inputTitle}>Value 1</Text>
+          <Text style={styles.inputTrackTitle}>Value 1</Text>
           <TextInput
             style={styles.inputField}
             placeholder={this.state.track.value1}
@@ -294,7 +294,7 @@ export default class App extends Component {
               this.setState(() => ({input}))}
             }
           />
-          <Text style={styles.inputTitle}>Property 2</Text>
+          <Text style={styles.inputTrackTitle}>Property 2</Text>
           <TextInput
             style={styles.inputField}
             placeholder={this.state.track.prop2}
@@ -304,7 +304,7 @@ export default class App extends Component {
               this.setState(() => ({input}))}
             }
           />
-          <Text style={styles.inputTitle}>Value 2</Text>
+          <Text style={styles.inputTrackTitle}>Value 2</Text>
           <TextInput
             style={styles.inputField}
             placeholder={this.state.track.value2}
@@ -358,6 +358,11 @@ const styles = StyleSheet.create({
   },
   inputTitle: {
     color: '#FFF',
-    fontSize: 20
+    fontSize: 20,
+  },
+  inputTrackTitle: {
+    color: '#FFF',
+    fontSize: 20,
+    marginBottom: 25
   }
 });
