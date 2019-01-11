@@ -12,7 +12,7 @@ import { Button } from 'react-native-elements';
 import analytics from '@segment/analytics-react-native';
 
 analytics
-  .setup('<Your write key goes here>', {
+  .setup('ilrQLGpSKvTLr1iuBuKjSH3wwBD7RDOh', {
     // using: [Mixpanel, GoogleAnalytics],
     flushAt: 1,
     debug: true,
@@ -47,31 +47,37 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      showIdentifySettings: false,
+      showTrackSettings: false,
       user: {
         userId: '742',
         email: 'homer@snpp.com',
         name: 'Homer Simpson'
       },
-      showIdentifySettings: false,
+      track: {
+        event: 'Object Action',
+        prop1: 'company',
+        prop2: 'name',
+        value1: 'Initec',
+        value2: 'James'
+      },
       input: {
         userId: '',
         email: '',
-        name: ''
+        name: '',
+        event: '',
+        prop1: '',
+        prop2: '',
+        value1: '',
+        value2: ''
       }
     }
   }
 
-  track1Press() {
-    analytics.track('Skill Gained', {
-      item: 'spider-sense',
-      stength: '75%'
-    })
-  }
-
-  track2Press() {
-    analytics.track('Ally Acquired', {
-      name: 'Ganke Lee',
-      relationship: 'friend'
+  trackPress() {
+    analytics.track(this.state.track.event, {
+      [this.state.track.prop1]: this.state.track.value1,
+      [this.state.track.prop2]: this.state.track.value2
     })
   }
 
@@ -103,6 +109,12 @@ export default class App extends Component {
     ))
   }
 
+  trackSettingsToggle() {
+    this.setState(previousState => (
+      { showTrackSettings: !previousState.showTrackSettings }
+    ))
+  }
+
   saveIdentifySettings() {
     let user = {
       userId: this.state.input.userId,
@@ -111,6 +123,18 @@ export default class App extends Component {
     }
     this.setState(() => ({ user }));
     this.identifySettingsToggle();
+  }
+
+  saveTrackSettings() {
+    let track = {
+      event: this.state.input.event,
+      prop1: this.state.input.prop1,
+      prop2: this.state.input.prop2,
+      value1: this.state.input.value1,
+      value2: this.state.input.value2
+    }
+    this.setState(() => ({ track }));
+    this.trackSettingsToggle();
   }
 
   render() {
@@ -123,7 +147,16 @@ export default class App extends Component {
         user += ")";
       }
     }
-    if (!this.state.showIdentifySettings) {
+    let event = '';
+    if (this.state.input.event) {
+      event = "  (" + this.state.input.event.substring(0, 15);
+      if (this.state.input.event.length > 15) {
+        event += "...)";
+      } else {
+        event += ")";
+      }
+    }
+    if (!this.state.showIdentifySettings && !this.state.showTrackSettings) {
       return (
         <View style={styles.container}>
           <Image
@@ -134,13 +167,8 @@ export default class App extends Component {
             <Text style={styles.instructions}>{instructions}</Text>
             <Button
               buttonStyle={styles.button}
-              onPress={() => this.track1Press()}
-              title="Track 1"
-            />
-            <Button
-              buttonStyle={styles.button}
-              onPress={() => this.track2Press()}
-              title="Track 2"
+              onPress={() => this.trackPress()}
+              title={"Track" + event}
             />
             <Button
               buttonStyle={styles.button}
@@ -166,12 +194,69 @@ export default class App extends Component {
               onPress={() => this.identifySettingsToggle()}
               title="Identify Settings"
             />
+            <Button
+              onPress={() => this.trackSettingsToggle()}
+              title="Track Settings"
+            />
           </View>
         </View>
       );
     }
     
     //  Identify Settings 
+    if (this.state.showIdentifySettings) {
+      return (
+        <View style={styles.container}>
+          <Image
+            style={{alignSelf: 'center'}}
+            source={require('./logo.png')}
+          />
+          <View style={styles.buttonContainer}>
+            <Text style={styles.inputTitle}>User ID</Text>
+            <TextInput
+              style={styles.inputField}
+              placeholder={this.state.user.userId}
+              onChangeText={(text) => {
+                let input = this.state.input;
+                input.userId = text;
+                this.setState(() => ({input}))}
+              }
+            />
+            <Text style={styles.inputTitle}>Email</Text>
+            <TextInput
+              style={styles.inputField}
+              placeholder={this.state.user.email}
+              onChangeText={(text) => {
+                let input = this.state.input;
+                input.email = text;
+                this.setState(() => ({input}))}
+              }
+            />
+            <Text style={styles.inputTitle}>Name</Text>
+            <TextInput
+              style={styles.inputField}
+              placeholder={this.state.user.name}
+              onChangeText={(text) => {
+                let input = this.state.input;
+                input.name = text;
+                this.setState(() => ({input}))}
+              }
+            />
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.saveIdentifySettings()}
+              title="Save"
+            />
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.identifySettingsToggle()}
+              title="Cancel"
+            />
+          </View>
+        </View>
+      );
+    }
+    // Track settings
     return (
       <View style={styles.container}>
         <Image
@@ -179,49 +264,69 @@ export default class App extends Component {
           source={require('./logo.png')}
         />
         <View style={styles.buttonContainer}>
-          <Text style={styles.inputTitle}>User ID</Text>
+          <Text style={styles.inputTitle}>Event</Text>
           <TextInput
             style={styles.inputField}
-            placeholder={this.state.user.userId}
+            placeholder={this.state.track.event}
             onChangeText={(text) => {
               let input = this.state.input;
-              input.userId = text;
+              input.event = text;
               this.setState(() => ({input}))}
             }
           />
-          <Text style={styles.inputTitle}>Email</Text>
+          <Text style={styles.inputTitle}>Property 1</Text>
           <TextInput
             style={styles.inputField}
-            placeholder={this.state.user.email}
+            placeholder={this.state.track.prop1}
             onChangeText={(text) => {
               let input = this.state.input;
-              input.email = text;
+              input.prop1 = text;
               this.setState(() => ({input}))}
             }
           />
-          <Text style={styles.inputTitle}>Name</Text>
+          <Text style={styles.inputTitle}>Value 1</Text>
           <TextInput
             style={styles.inputField}
-            placeholder={this.state.user.name}
+            placeholder={this.state.track.value1}
             onChangeText={(text) => {
               let input = this.state.input;
-              input.name = text;
+              input.value1 = text;
+              this.setState(() => ({input}))}
+            }
+          />
+          <Text style={styles.inputTitle}>Property 2</Text>
+          <TextInput
+            style={styles.inputField}
+            placeholder={this.state.track.prop2}
+            onChangeText={(text) => {
+              let input = this.state.input;
+              input.prop2 = text;
+              this.setState(() => ({input}))}
+            }
+          />
+          <Text style={styles.inputTitle}>Value 2</Text>
+          <TextInput
+            style={styles.inputField}
+            placeholder={this.state.track.value2}
+            onChangeText={(text) => {
+              let input = this.state.input;
+              input.value2 = text;
               this.setState(() => ({input}))}
             }
           />
           <Button
             buttonStyle={styles.button}
-            onPress={() => this.saveIdentifySettings()}
+            onPress={() => this.saveTrackSettings()}
             title="Save"
           />
           <Button
             buttonStyle={styles.button}
-            onPress={() => this.identifySettingsToggle()}
+            onPress={() => this.trackSettingsToggle()}
             title="Cancel"
           />
         </View>
       </View>
-    );
+    )
   }
 }
 
