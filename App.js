@@ -11,6 +11,30 @@ import {Platform, StyleSheet, Text, View, Image, TextInput} from 'react-native';
 import { Button } from 'react-native-elements';
 import analytics from '@segment/analytics-react-native';
 
+analytics
+  .setup('<Your write key goes here>', {
+    // using: [Mixpanel, GoogleAnalytics],
+    flushAt: 1,
+    debug: true,
+    recordScreenViews: true,
+    trackAppLifecycleEvents: true,
+    trackAttributionData: true,
+
+    android: {
+        // flushInterval: 60,
+        collectDeviceId: true
+    },
+    ios: {
+        trackAdvertising: true,
+        trackDeepLinks: true
+    }
+  })
+  .then(() =>
+    console.log('Analytics is ready')
+  )
+  .catch(err =>
+    console.error('Something went wrong', err)
+  )
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -35,14 +59,6 @@ export default class App extends Component {
         name: ''
       }
     }
-  }
-  componentWillMount() {
-     analytics.setup('<Your write key goes here>', {
-      // Record screen views automatically!
-      // recordScreenViews: true,
-      // Record certain application events automatically!
-      // trackAppLifecycleEvents: true
-    })
   }
 
   track1Press() {
@@ -73,11 +89,11 @@ export default class App extends Component {
     })
   }
   
-  flushPress = () => {
+  flushPress() {
     analytics.flush()
   }
   
-  resetPress = () => {
+  resetPress() {
     analytics.reset();
   }
 
@@ -93,15 +109,14 @@ export default class App extends Component {
       email: this.state.input.email,
       name: this.state.input.name,
     }
-    this.setState({ user });
+    this.setState(() => ({ user }));
     this.identifySettingsToggle();
   }
 
   render() {
-    // if (this.state.input.userId) {}
     let user = '';
     if (this.state.input.userId) {
-      user = " (" + this.state.user.userId.substring(0, 15);
+      user = "  (" + this.state.user.userId.substring(0, 15);
       if (this.state.input.userId.length > 15) {
         user += "...)";
       } else {
@@ -130,7 +145,7 @@ export default class App extends Component {
             <Button
               buttonStyle={styles.button}
               onPress={() => this.identifyPress()}
-              title={"Identify " + user}
+              title={"Identify" + user}
             />
             <Button
               buttonStyle={styles.button}
@@ -159,41 +174,41 @@ export default class App extends Component {
     //  Identify Settings 
     return (
       <View style={styles.container}>
-      <Image
-      style={{alignSelf: 'center'}}
-      source={require('./logo.png')}
-      />
-      <View style={styles.buttonContainer}>
-        <Text style={styles.inputTitle}>User ID</Text>
-        <TextInput
-          style={styles.inputField}
-          placeholder={this.state.user.userId}
-          onChangeText={(text) => {
-            let input = this.state.input;
-            input.userId = text;
-            this.setState({input})}
-          }
+        <Image
+          style={{alignSelf: 'center'}}
+          source={require('./logo.png')}
         />
-        <Text style={styles.inputTitle}>Email</Text>
-        <TextInput
-          style={styles.inputField}
-          placeholder={this.state.user.email}
-          onChangeText={(text) => {
-            let input = this.state.input;
-            input.email = text;
-            this.setState({input})}
-          }
-        />
-        <Text style={styles.inputTitle}>Name</Text>
-        <TextInput
-          style={styles.inputField}
-          placeholder={this.state.user.name}
-          onChangeText={(text) => {
-            let input = this.state.input;
-            input.name = text;
-            this.setState({input})}
-          }
-        />
+        <View style={styles.buttonContainer}>
+          <Text style={styles.inputTitle}>User ID</Text>
+          <TextInput
+            style={styles.inputField}
+            placeholder={this.state.user.userId}
+            onChangeText={(text) => {
+              let input = this.state.input;
+              input.userId = text;
+              this.setState(() => ({input}))}
+            }
+          />
+          <Text style={styles.inputTitle}>Email</Text>
+          <TextInput
+            style={styles.inputField}
+            placeholder={this.state.user.email}
+            onChangeText={(text) => {
+              let input = this.state.input;
+              input.email = text;
+              this.setState(() => ({input}))}
+            }
+          />
+          <Text style={styles.inputTitle}>Name</Text>
+          <TextInput
+            style={styles.inputField}
+            placeholder={this.state.user.name}
+            onChangeText={(text) => {
+              let input = this.state.input;
+              input.name = text;
+              this.setState(() => ({input}))}
+            }
+          />
           <Button
             buttonStyle={styles.button}
             onPress={() => this.saveIdentifySettings()}
@@ -207,7 +222,6 @@ export default class App extends Component {
         </View>
       </View>
     );
-    
   }
 }
 
