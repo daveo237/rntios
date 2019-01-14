@@ -191,12 +191,12 @@ export default class App extends Component {
               title="Reset"
             />
             <Button
-              onPress={() => this.identifySettingsToggle()}
-              title="Identify Settings"
-            />
-            <Button
               onPress={() => this.trackSettingsToggle()}
               title="Track Settings"
+            />
+            <Button
+              onPress={() => this.identifySettingsToggle()}
+              title="Identify Settings"
             />
           </View>
         </View>
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
   inputField: {
     backgroundColor: '#FFF',
     height: '9%',
-    marginTop: '-8%'
+    // marginTop: '-8%'
   },
   inputTitle: {
     color: '#FFF',
@@ -363,6 +363,6 @@ const styles = StyleSheet.create({
   inputTrackTitle: {
     color: '#FFF',
     fontSize: 20,
-    marginBottom: 25
+    // marginBottom: 25
   }
 });
