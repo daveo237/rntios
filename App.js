@@ -13,7 +13,7 @@ import analytics from '@segment/analytics-react-native';
 
 
 analytics
-  .setup('ilrQLGpSKvTLr1iuBuKjSH3wwBD7RDOh', {
+  .setup('write_key', {
     // using: [Firebase],
     flushAt: 1,
     debug: true,
