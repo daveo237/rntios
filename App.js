@@ -13,7 +13,7 @@ import analytics from '@segment/analytics-react-native';
 
 
 analytics
-  .setup('write_key', {
+  .setup('ilrQLGpSKvTLr1iuBuKjSH3wwBD7RDOhgit status', {
     // using: [Firebase],
     flushAt: 1,
     debug: true,
@@ -56,11 +56,11 @@ export default class App extends Component {
         name: 'Homer Simpson'
       },
       track: {
-        event: 'Object Action',
-        prop1: 'company',
-        prop2: 'name',
-        value1: 'Initec',
-        value2: 'James'
+        event: 'Coupon Entered',
+        prop1: 'orderId',
+        prop2: 'couponId',
+        value1: '50314b8e9bcf',
+        value2: '100th_donut_free'
       },
       input: {
         userId: '',
@@ -115,7 +115,7 @@ export default class App extends Component {
       { showTrackSettings: !previousState.showTrackSettings }
     ))
   }
-
+  
   saveIdentifySettings() {
     let user = {
       userId: this.state.input.userId || this.state.user.userId,
@@ -125,14 +125,27 @@ export default class App extends Component {
     this.setState(() => ({ user }));
     this.identifySettingsToggle();
   }
+  
+  dataTypeCoercion(value) {
+    if (value.toLowerCase() === 'true') {
+      return true;
+    }
+    if (value.toLowerCase() === 'false') {
+      return false;
+    }
+    if (!isNaN(value)) {
+      return Number(value);
+    }
+    return value;
+  }
 
   saveTrackSettings() {
     let track = {
       event: this.state.input.event || this.state.track.event,
       prop1: this.state.input.prop1 || this.state.track.prop1,
       prop2: this.state.input.prop2 || this.state.track.prop2,
-      value1: this.state.input.value1 || this.state.track.value1,
-      value2: this.state.input.value2 || this.state.track.value2
+      value1: this.state.input.value1 !== '' ? this.dataTypeCoercion(this.state.input.value1) : this.state.track.value1,
+      value2: this.state.input.value1 !== '' ? this.dataTypeCoercion(this.state.input.value2) : this.state.track.value2
     }
     this.setState(() => ({ track }));
     this.trackSettingsToggle();
@@ -294,7 +307,7 @@ export default class App extends Component {
           <Text style={styles.inputTitle}>Value 1</Text>
           <TextInput
             style={styles.inputFieldTrack}
-            placeholder={this.state.track.value1}
+            placeholder={this.state.track.value1.toString()}
             onChangeText={(text) => {
               let input = this.state.input;
               input.value1 = text;
@@ -314,7 +327,7 @@ export default class App extends Component {
           <Text style={styles.inputTitle}>Value 2</Text>
           <TextInput
             style={styles.inputFieldTrack}
-            placeholder={this.state.track.value2}
+            placeholder={this.state.track.value2.toString()}
             onChangeText={(text) => {
               let input = this.state.input;
               input.value2 = text;
