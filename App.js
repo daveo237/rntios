@@ -13,7 +13,7 @@ import analytics from '@segment/analytics-react-native';
 
 
 analytics
-  .setup('ilrQLGpSKvTLr1iuBuKjSH3wwBD7RDOhgit status', {
+  .setup('ilrQLGpSKvTLr1iuBuKjSH3wwBD7RDOh', {
     // using: [Firebase],
     flushAt: 1,
     debug: true,
@@ -206,11 +206,11 @@ export default class App extends Component {
             />
             <Button
               onPress={() => this.trackSettingsToggle()}
-              title="Custom Track"
+              title="Track Settings"
             />
             <Button
               onPress={() => this.identifySettingsToggle()}
-              title="Custom Identify"
+              title="Identify Settings"
             />
           </View>
         </View>
