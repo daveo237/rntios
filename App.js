@@ -231,6 +231,8 @@ export default class App extends Component {
                 <Text style={styles.inputTitle}>User ID</Text>
                 <TextInput
                   style={styles.inputFieldIdentify}
+                  defaultValue={this.state.user.userId}
+                  editable={true}
                   placeholder={this.state.user.userId}
                   onChangeText={(text) => {
                     let input = this.state.input;
@@ -243,6 +245,8 @@ export default class App extends Component {
                   <Text style={styles.inputTitle}>Email</Text>
                   <TextInput
                     style={styles.inputFieldIdentify}
+                    defaultValue={this.state.user.email}
+                    editable={true}
                     placeholder={this.state.user.email}
                     onChangeText={(text) => {
                       let input = this.state.input;
@@ -255,6 +259,8 @@ export default class App extends Component {
             <Text style={styles.inputTitle}>Name</Text>
                 <TextInput
                   style={styles.inputFieldIdentify}
+                  defaultValue={this.state.user.name}
+                  editable={true}
                   placeholder={this.state.user.name}
                   onChangeText={(text) => {
                     let input = this.state.input;
@@ -288,6 +294,8 @@ export default class App extends Component {
           <Text style={styles.inputTitle}>Event Name</Text>
           <TextInput
             style={styles.inputFieldTrack}
+            defaultValue={this.state.track.event}
+            editable={true}
             placeholder={this.state.track.event}
             onChangeText={(text) => {
               let input = this.state.input;
@@ -298,6 +306,8 @@ export default class App extends Component {
           <Text style={styles.inputTitle}>Property 1</Text>
           <TextInput
             style={styles.inputFieldTrack}
+            defaultValue={this.state.track.prop1}
+            editable={true}
             placeholder={this.state.track.prop1}
             onChangeText={(text) => {
               let input = this.state.input;
@@ -308,6 +318,8 @@ export default class App extends Component {
           <Text style={styles.inputTitle}>Value 1</Text>
           <TextInput
             style={styles.inputFieldTrack}
+            defaultValue={this.state.track.value1.toString()}
+            editable={true}
             placeholder={this.state.track.value1.toString()}
             onChangeText={(text) => {
               let input = this.state.input;
@@ -318,6 +330,8 @@ export default class App extends Component {
           <Text style={styles.inputTitle}>Property 2</Text>
           <TextInput
             style={styles.inputFieldTrack}
+            defaultValue={this.state.track.prop2}
+            editable={true}
             placeholder={this.state.track.prop2}
             onChangeText={(text) => {
               let input = this.state.input;
@@ -328,6 +342,8 @@ export default class App extends Component {
           <Text style={styles.inputTitle}>Value 2</Text>
           <TextInput
             style={styles.inputFieldTrack}
+            defaultValue={this.state.track.value2.toString()}
+            editable={true}
             placeholder={this.state.track.value2.toString()}
             onChangeText={(text) => {
               let input = this.state.input;
