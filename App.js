@@ -13,7 +13,7 @@ import analytics from '@segment/analytics-react-native';
 
 
 analytics
-  .setup('<enter your write key', {
+  .setup('<enter your write key>', {
     // using: [Firebase],
     flushAt: 1,
     debug: true,
@@ -232,7 +232,7 @@ export default class App extends Component {
                 <TextInput
                   style={styles.inputFieldIdentify}
                   defaultValue={this.state.user.userId}
-                  editable={true}
+                  clearTextOnFocus={true}
                   placeholder={this.state.user.userId}
                   onChangeText={(text) => {
                     let input = this.state.input;
@@ -246,7 +246,7 @@ export default class App extends Component {
                   <TextInput
                     style={styles.inputFieldIdentify}
                     defaultValue={this.state.user.email}
-                    editable={true}
+                    clearTextOnFocus={true}
                     placeholder={this.state.user.email}
                     onChangeText={(text) => {
                       let input = this.state.input;
@@ -260,7 +260,7 @@ export default class App extends Component {
                 <TextInput
                   style={styles.inputFieldIdentify}
                   defaultValue={this.state.user.name}
-                  editable={true}
+                  clearTextOnFocus={true}
                   placeholder={this.state.user.name}
                   onChangeText={(text) => {
                     let input = this.state.input;
@@ -295,7 +295,7 @@ export default class App extends Component {
           <TextInput
             style={styles.inputFieldTrack}
             defaultValue={this.state.track.event}
-            editable={true}
+            clearTextOnFocus={true}
             placeholder={this.state.track.event}
             onChangeText={(text) => {
               let input = this.state.input;
@@ -307,7 +307,7 @@ export default class App extends Component {
           <TextInput
             style={styles.inputFieldTrack}
             defaultValue={this.state.track.prop1}
-            editable={true}
+            clearTextOnFocus={true}
             placeholder={this.state.track.prop1}
             onChangeText={(text) => {
               let input = this.state.input;
@@ -319,7 +319,7 @@ export default class App extends Component {
           <TextInput
             style={styles.inputFieldTrack}
             defaultValue={this.state.track.value1.toString()}
-            editable={true}
+            clearTextOnFocus={true}
             placeholder={this.state.track.value1.toString()}
             onChangeText={(text) => {
               let input = this.state.input;
@@ -331,7 +331,7 @@ export default class App extends Component {
           <TextInput
             style={styles.inputFieldTrack}
             defaultValue={this.state.track.prop2}
-            editable={true}
+            clearTextOnFocus={true}
             placeholder={this.state.track.prop2}
             onChangeText={(text) => {
               let input = this.state.input;
@@ -343,7 +343,7 @@ export default class App extends Component {
           <TextInput
             style={styles.inputFieldTrack}
             defaultValue={this.state.track.value2.toString()}
-            editable={true}
+            clearTextOnFocus={true}
             placeholder={this.state.track.value2.toString()}
             onChangeText={(text) => {
               let input = this.state.input;
