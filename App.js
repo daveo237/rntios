@@ -17,7 +17,8 @@ analytics
     // using: [Firebase],
     flushAt: 1,
     debug: true,
-    recordScreenViews: true,
+    // if recordScreenViews is set to true then clicking on input fields triggers screen calls - SDK may be tracking some sort of 'new' screen that is created behind the scenes
+    recordScreenViews: false,
     trackAppLifecycleEvents: true,
     trackAttributionData: true,
 
