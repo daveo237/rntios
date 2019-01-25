@@ -13,11 +13,12 @@ import analytics from '@segment/analytics-react-native';
 
 
 analytics
-  .setup('ilrQLGpSKvTLr1iuBuKjSH3wwBD7RDOh', {
+  .setup('<enter your write key', {
     // using: [Firebase],
     flushAt: 1,
     debug: true,
-    recordScreenViews: true,
+    // if recordScreenViews is set to true then clicking on input fields triggers screen calls - SDK may be tracking some sort of 'new' screen that is created behind the scenes
+    recordScreenViews: false,
     trackAppLifecycleEvents: true,
     trackAttributionData: true,
 
