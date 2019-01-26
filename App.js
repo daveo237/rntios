@@ -10,11 +10,11 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Image, TextInput} from 'react-native';
 import { Button } from 'react-native-elements';
 import analytics from '@segment/analytics-react-native';
-// import IdentifySettings from './components/IdentifySettings'
+import IdentifySettings from './components/IdentifySettings'
 
 
 analytics
-  .setup('<enter your write key>', {
+  .setup('ilrQLGpSKvTLr1iuBuKjSH3wwBD7RDOh', {
     // using: [Firebase],
     flushAt: 1,
     debug: true,
@@ -118,11 +118,12 @@ export default class App extends Component {
     ))
   }
   
-  saveIdentifySettings() {
+  saveIdentifySettings(input) {
+    // console.log('!!!!!!!!!!!!!', input)
     let user = {
-      userId: this.state.input.userId || this.state.user.userId,
-      email: this.state.input.email || this.state.user.email,
-      name: this.state.input.name || this.state.user.name,
+      userId: input.userId || this.state.user.userId,
+      email: input.email || this.state.user.email,
+      name: input.name || this.state.user.name,
     }
     this.setState(() => ({ user }));
     this.identifySettingsToggle();
@@ -155,7 +156,7 @@ export default class App extends Component {
 
   render() {
     let user = '';
-    if (this.state.input.userId) {
+    if (this.state.input.userId !== '742') {
       user = "  (" + this.state.user.userId.substring(0, 15);
       if (this.state.input.userId.length > 15) {
         user += "...)";
@@ -222,66 +223,7 @@ export default class App extends Component {
     //  Identify Settings
     if (this.state.showIdentifySettings) {
       return (
-        <View style={styles.container}>
-          <Image
-            style={{alignSelf: 'center'}}
-            source={require('./logo.png')}
-          />
-          <View style={styles.buttonContainer}>
-            <View style={styles.inputContainer}>
-                <Text style={styles.inputTitle}>User ID</Text>
-                <TextInput
-                  style={styles.inputFieldIdentify}
-                  defaultValue={this.state.user.userId}
-                  clearTextOnFocus={true}
-                  placeholder={this.state.user.userId}
-                  onChangeText={(text) => {
-                    let input = this.state.input;
-                    input.userId = text;
-                    this.setState(() => ({input}))}
-                  }
-                />
-              </View>
-              <View style={styles.inputContainer}>
-                  <Text style={styles.inputTitle}>Email</Text>
-                  <TextInput
-                    style={styles.inputFieldIdentify}
-                    defaultValue={this.state.user.email}
-                    clearTextOnFocus={true}
-                    placeholder={this.state.user.email}
-                    onChangeText={(text) => {
-                      let input = this.state.input;
-                      input.email = text;
-                      this.setState(() => ({input}))}
-                    }
-                  />
-              </View>
-              <View style={styles.inputContainer}>
-            <Text style={styles.inputTitle}>Name</Text>
-                <TextInput
-                  style={styles.inputFieldIdentify}
-                  defaultValue={this.state.user.name}
-                  clearTextOnFocus={true}
-                  placeholder={this.state.user.name}
-                  onChangeText={(text) => {
-                    let input = this.state.input;
-                    input.name = text;
-                    this.setState(() => ({input}))}
-                  }
-                />
-            </View>
-            <Button
-              buttonStyle={styles.button}
-              onPress={() => this.saveIdentifySettings()}
-              title="Save"
-            />
-            <Button
-              buttonStyle={styles.button}
-              onPress={() => this.identifySettingsToggle()}
-              title="Cancel"
-            />
-          </View>
-        </View>
+        <IdentifySettings user={this.state.user} save={this.saveIdentifySettings.bind(this)} toggle={() => this.identifySettingsToggle()} />
       );
     }
     // Track settings
