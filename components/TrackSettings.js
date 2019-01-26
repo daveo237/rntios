@@ -18,7 +18,10 @@ export default class TrackSettings extends Component {
   render() {
     return (
       <View style={styles.container}>
-
+        <Image
+          style={{alignSelf: 'center'}}
+          source={require('../logo.png')}
+        />
         <View style={styles.buttonContainer}>
           <Text style={styles.inputTitle}>Event Name</Text>
           <TextInput
@@ -103,11 +106,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     maxHeight: '100%',
     backgroundColor: '#01376C'
-  },
-  instructions: {
-    textAlign: 'center',
-    color: 'white',
-    marginBottom: 5,
   },
   buttonContainer: {
     justifyContent: 'space-between',

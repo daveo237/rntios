@@ -16,38 +16,41 @@ export default class IdentifySettings extends Component {
   render() {
     return (
       <View style={styles.container}>
-        
+        <Image
+          style={{alignSelf: 'center'}}
+          source={require('../logo.png')}
+        />
         <View style={styles.buttonContainer}>
           <View style={styles.inputContainer}>
-              <Text style={styles.inputTitle}>User ID</Text>
-              <TextInput
-                style={styles.inputFieldIdentify}
-                defaultValue={this.props.user.userId}
-                clearTextOnFocus={true}
-                placeholder={this.props.user.userId}
-                onChangeText={(text) => {
-                  let input = this.state.input;
-                  input.userId = text;
-                  this.setState(() => ({input}))}
-                }
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputTitle}>Email</Text>
-              <TextInput
-                style={styles.inputFieldIdentify}
-                defaultValue={this.props.user.email}
-                clearTextOnFocus={true}
-                placeholder={this.props.user.email}
-                onChangeText={(text) => {
-                  let input = this.state.input;
-                  input.email = text;
-                  this.setState(() => ({input}))}
-                }
-              />
-            </View>
-            <View style={styles.inputContainer}>
-          <Text style={styles.inputTitle}>Name</Text>
+            <Text style={styles.inputTitle}>User ID</Text>
+            <TextInput
+              style={styles.inputFieldIdentify}
+              defaultValue={this.props.user.userId}
+              clearTextOnFocus={true}
+              placeholder={this.props.user.userId}
+              onChangeText={(text) => {
+                let input = this.state.input;
+                input.userId = text;
+                this.setState(() => ({input}))}
+              }
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputTitle}>Email</Text>
+            <TextInput
+              style={styles.inputFieldIdentify}
+              defaultValue={this.props.user.email}
+              clearTextOnFocus={true}
+              placeholder={this.props.user.email}
+              onChangeText={(text) => {
+                let input = this.state.input;
+                input.email = text;
+                this.setState(() => ({input}))}
+              }
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputTitle}>Name</Text>
             <TextInput
               style={styles.inputFieldIdentify}
               defaultValue={this.props.user.name}
@@ -83,11 +86,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     maxHeight: '100%',
     backgroundColor: '#01376C'
-  },
-  instructions: {
-    textAlign: 'center',
-    color: 'white',
-    marginBottom: 5,
   },
   buttonContainer: {
     justifyContent: 'space-between',
