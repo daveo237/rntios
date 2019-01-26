@@ -8,7 +8,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image, TextInput} from 'react-native';
+import {Platform, StyleSheet, Text, View, Image} from 'react-native';
 import { Button } from 'react-native-elements';
 import IdentifySettings from './components/IdentifySettings';
 import TrackSettings from './components/TrackSettings';
