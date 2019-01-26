@@ -10,6 +10,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Image, TextInput} from 'react-native';
 import { Button } from 'react-native-elements';
 import analytics from '@segment/analytics-react-native';
+// import IdentifySettings from './components/IdentifySettings'
 
 
 analytics
