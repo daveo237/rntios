@@ -10,8 +10,8 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Image, TextInput} from 'react-native';
 import { Button } from 'react-native-elements';
 import analytics from '@segment/analytics-react-native';
-import IdentifySettings from './components/IdentifySettings'
-
+import IdentifySettings from './components/IdentifySettings';
+import TrackSettings from './components/TrackSettings';
 
 analytics
   .setup('ilrQLGpSKvTLr1iuBuKjSH3wwBD7RDOh', {
@@ -63,16 +63,6 @@ export default class App extends Component {
         prop2: 'couponId',
         value1: '50314b8e9bcf',
         value2: '100th_donut_free'
-      },
-      input: {
-        userId: '',
-        email: '',
-        name: '',
-        event: '',
-        prop1: '',
-        prop2: '',
-        value1: '',
-        value2: ''
       }
     }
   }
@@ -119,7 +109,6 @@ export default class App extends Component {
   }
   
   saveIdentifySettings(input) {
-    // console.log('!!!!!!!!!!!!!', input)
     let user = {
       userId: input.userId || this.state.user.userId,
       email: input.email || this.state.user.email,
@@ -142,13 +131,13 @@ export default class App extends Component {
     return value;
   }
 
-  saveTrackSettings() {
+  saveTrackSettings(input) {
     let track = {
-      event: this.state.input.event || this.state.track.event,
-      prop1: this.state.input.prop1 || this.state.track.prop1,
-      prop2: this.state.input.prop2 || this.state.track.prop2,
-      value1: this.state.input.value1 !== '' ? this.dataTypeCoercion(this.state.input.value1) : this.state.track.value1,
-      value2: this.state.input.value1 !== '' ? this.dataTypeCoercion(this.state.input.value2) : this.state.track.value2
+      event: input.event || this.state.track.event,
+      prop1: input.prop1 || this.state.track.prop1,
+      prop2: input.prop2 || this.state.track.prop2,
+      value1: input.value1 !== '' ? this.dataTypeCoercion(input.value1) : this.state.track.value1,
+      value2: input.value2 !== '' ? this.dataTypeCoercion(input.value2) : this.state.track.value2
     }
     this.setState(() => ({ track }));
     this.trackSettingsToggle();
@@ -156,18 +145,18 @@ export default class App extends Component {
 
   render() {
     let user = '';
-    if (this.state.input.userId !== '742') {
+    if (this.state.user.userId !== '742') {
       user = "  (" + this.state.user.userId.substring(0, 15);
-      if (this.state.input.userId.length > 15) {
+      if (this.state.user.userId.length > 15) {
         user += "...)";
       } else {
         user += ")";
       }
     }
     let event = '';
-    if (this.state.input.event) {
-      event = "  (" + this.state.input.event.substring(0, 15);
-      if (this.state.input.event.length > 15) {
+    if (this.state.track.event !== 'Coupon Entered') {
+      event = "  (" + this.state.track.event.substring(0, 15);
+      if (this.state.track.event.length > 15) {
         event += "...)";
       } else {
         event += ")";
@@ -223,89 +212,20 @@ export default class App extends Component {
     //  Identify Settings
     if (this.state.showIdentifySettings) {
       return (
-        <IdentifySettings user={this.state.user} save={this.saveIdentifySettings.bind(this)} toggle={() => this.identifySettingsToggle()} />
+        <IdentifySettings 
+          user={this.state.user} 
+          save={this.saveIdentifySettings.bind(this)} 
+          toggle={() => this.identifySettingsToggle()} 
+        />
       );
     }
     // Track settings
     return (
-      <View style={styles.container}>
-        <Image
-          style={{alignSelf: 'center'}}
-          source={require('./logo.png')}
-        />
-        <View style={styles.buttonContainer}>
-          <Text style={styles.inputTitle}>Event Name</Text>
-          <TextInput
-            style={styles.inputFieldTrack}
-            defaultValue={this.state.track.event}
-            clearTextOnFocus={true}
-            placeholder={this.state.track.event}
-            onChangeText={(text) => {
-              let input = this.state.input;
-              input.event = text;
-              this.setState(() => ({input}))}
-            }
-          />
-          <Text style={styles.inputTitle}>Property 1</Text>
-          <TextInput
-            style={styles.inputFieldTrack}
-            defaultValue={this.state.track.prop1}
-            clearTextOnFocus={true}
-            placeholder={this.state.track.prop1}
-            onChangeText={(text) => {
-              let input = this.state.input;
-              input.prop1 = text;
-              this.setState(() => ({input}))}
-            }
-          />
-          <Text style={styles.inputTitle}>Value 1</Text>
-          <TextInput
-            style={styles.inputFieldTrack}
-            defaultValue={this.state.track.value1.toString()}
-            clearTextOnFocus={true}
-            placeholder={this.state.track.value1.toString()}
-            onChangeText={(text) => {
-              let input = this.state.input;
-              input.value1 = text;
-              this.setState(() => ({input}))}
-            }
-          />
-          <Text style={styles.inputTitle}>Property 2</Text>
-          <TextInput
-            style={styles.inputFieldTrack}
-            defaultValue={this.state.track.prop2}
-            clearTextOnFocus={true}
-            placeholder={this.state.track.prop2}
-            onChangeText={(text) => {
-              let input = this.state.input;
-              input.prop2 = text;
-              this.setState(() => ({input}))}
-            }
-          />
-          <Text style={styles.inputTitle}>Value 2</Text>
-          <TextInput
-            style={styles.inputFieldTrack}
-            defaultValue={this.state.track.value2.toString()}
-            clearTextOnFocus={true}
-            placeholder={this.state.track.value2.toString()}
-            onChangeText={(text) => {
-              let input = this.state.input;
-              input.value2 = text;
-              this.setState(() => ({input}))}
-            }
-          />
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => this.saveTrackSettings()}
-            title="Save"
-          />
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => this.trackSettingsToggle()}
-            title="Cancel"
-          />
-        </View>
-      </View>
+      <TrackSettings 
+        track={this.state.track}
+        save={this.saveTrackSettings.bind(this)} 
+        toggle={() => this.trackSettingsToggle()}
+      />
     )
   }
 }
