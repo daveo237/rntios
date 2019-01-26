@@ -7,7 +7,7 @@ export default class TrackSettings extends Component {
     super(props);
     this.state = {
       input: {
-        event: '',
+        name: '',
         prop1: '',
         prop2: '',
         value1: '',
@@ -26,9 +26,9 @@ export default class TrackSettings extends Component {
           <Text style={styles.inputTitle}>Event Name</Text>
           <TextInput
             style={styles.inputFieldTrack}
-            defaultValue={this.props.track.event}
+            defaultValue={this.props.event.name}
             clearTextOnFocus={true}
-            placeholder={this.props.track.event}
+            placeholder={this.props.event.name}
             onChangeText={(text) => {
               let input = this.state.input;
               input.event = text;
@@ -38,9 +38,9 @@ export default class TrackSettings extends Component {
           <Text style={styles.inputTitle}>Property 1</Text>
           <TextInput
             style={styles.inputFieldTrack}
-            defaultValue={this.props.track.prop1}
+            defaultValue={this.props.event.prop1}
             clearTextOnFocus={true}
-            placeholder={this.props.track.prop1}
+            placeholder={this.props.event.prop1}
             onChangeText={(text) => {
               let input = this.state.input;
               input.prop1 = text;
@@ -50,9 +50,9 @@ export default class TrackSettings extends Component {
           <Text style={styles.inputTitle}>Value 1</Text>
           <TextInput
             style={styles.inputFieldTrack}
-            defaultValue={this.props.track.value1.toString()}
+            defaultValue={this.props.event.value1.toString()}
             clearTextOnFocus={true}
-            placeholder={this.props.track.value1.toString()}
+            placeholder={this.props.event.value1.toString()}
             onChangeText={(text) => {
               let input = this.state.input;
               input.value1 = text;
@@ -62,9 +62,9 @@ export default class TrackSettings extends Component {
           <Text style={styles.inputTitle}>Property 2</Text>
           <TextInput
             style={styles.inputFieldTrack}
-            defaultValue={this.props.track.prop2}
+            defaultValue={this.props.event.prop2}
             clearTextOnFocus={true}
-            placeholder={this.props.track.prop2}
+            placeholder={this.props.event.prop2}
             onChangeText={(text) => {
               let input = this.state.input;
               input.prop2 = text;
@@ -74,9 +74,9 @@ export default class TrackSettings extends Component {
           <Text style={styles.inputTitle}>Value 2</Text>
           <TextInput
             style={styles.inputFieldTrack}
-            defaultValue={this.props.track.value2.toString()}
+            defaultValue={this.props.event.value2.toString()}
             clearTextOnFocus={true}
-            placeholder={this.props.track.value2.toString()}
+            placeholder={this.props.event.value2.toString()}
             onChangeText={(text) => {
               let input = this.state.input;
               input.value2 = text;

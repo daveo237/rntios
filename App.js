@@ -1,7 +1,8 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
+ * React Native Test App 
+ * https://github.com/spencerattick/reactNativeTestApp
+ * created by Spencer Attick and James Reynolds
+ * 
  * @format
  * @flow
  */
@@ -9,12 +10,12 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Image, TextInput} from 'react-native';
 import { Button } from 'react-native-elements';
-import analytics from '@segment/analytics-react-native';
 import IdentifySettings from './components/IdentifySettings';
 import TrackSettings from './components/TrackSettings';
+import analytics from '@segment/analytics-react-native';
 
 analytics
-  .setup('ilrQLGpSKvTLr1iuBuKjSH3wwBD7RDOh', {
+  .setup('<Enter Your Write Key Here>', {
     // using: [Firebase],
     flushAt: 1,
     debug: true,
@@ -39,13 +40,6 @@ analytics
     console.error('Something went wrong', err)
   )
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -57,8 +51,8 @@ export default class App extends Component {
         email: 'homer@snpp.com',
         name: 'Homer Simpson'
       },
-      track: {
-        event: 'Coupon Entered',
+      event: {
+        name: 'Coupon Entered',
         prop1: 'orderId',
         prop2: 'couponId',
         value1: '50314b8e9bcf',
@@ -68,9 +62,9 @@ export default class App extends Component {
   }
 
   trackPress() {
-    analytics.track(this.state.track.event, {
-      [this.state.track.prop1]: this.state.track.value1,
-      [this.state.track.prop2]: this.state.track.value2
+    analytics.track(this.state.event.name, {
+      [this.state.event.prop1]: this.state.event.value1,
+      [this.state.event.prop2]: this.state.event.value2
     })
   }
 
@@ -132,14 +126,14 @@ export default class App extends Component {
   }
 
   saveTrackSettings(input) {
-    let track = {
-      event: input.event || this.state.track.event,
-      prop1: input.prop1 || this.state.track.prop1,
-      prop2: input.prop2 || this.state.track.prop2,
-      value1: input.value1 !== '' ? this.dataTypeCoercion(input.value1) : this.state.track.value1,
-      value2: input.value2 !== '' ? this.dataTypeCoercion(input.value2) : this.state.track.value2
+    let event = {
+      name: input.event || this.state.event.name,
+      prop1: input.prop1 || this.state.event.prop1,
+      prop2: input.prop2 || this.state.event.prop2,
+      value1: input.value1 !== '' ? this.dataTypeCoercion(input.value1) : this.state.event.value1,
+      value2: input.value2 !== '' ? this.dataTypeCoercion(input.value2) : this.state.event.value2
     }
-    this.setState(() => ({ track }));
+    this.setState(() => ({ event }));
     this.trackSettingsToggle();
   }
 
@@ -154,9 +148,9 @@ export default class App extends Component {
       }
     }
     let event = '';
-    if (this.state.track.event !== 'Coupon Entered') {
-      event = "  (" + this.state.track.event.substring(0, 15);
-      if (this.state.track.event.length > 15) {
+    if (this.state.event.name !== 'Coupon Entered') {
+      event = "  (" + this.state.event.name.substring(0, 15);
+      if (this.state.event.name.length > 15) {
         event += "...)";
       } else {
         event += ")";
@@ -222,13 +216,20 @@ export default class App extends Component {
     // Track settings
     return (
       <TrackSettings 
-        track={this.state.track}
+        event={this.state.event}
         save={this.saveTrackSettings.bind(this)} 
         toggle={() => this.trackSettingsToggle()}
       />
-    )
+    );
   }
 }
+
+const instructions = Platform.select({
+  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
+  android:
+    'Double tap R on your keyboard to reload,\n' +
+    'Shake or press menu button for dev menu',
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -251,26 +252,5 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#46B67E',
-  },
-  inputContainer: {
-    minHeight: '10%',
-    justifyContent: 'space-around',
-    borderRadius: 25
-  },
-  inputFieldTrack: {
-    minHeight: '2%',
-    backgroundColor: '#FFF',
-    padding: '5%',
-    borderRadius: 3
-  },
-  inputFieldIdentify: {
-    backgroundColor: '#FFF',
-    minHeight: '10%',
-    padding: '5%',
-    borderRadius: 3
-  },
-  inputTitle: {
-    color: '#FFF',
-    fontSize: 16,
-  },
+  }
 });
