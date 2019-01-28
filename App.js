@@ -74,6 +74,10 @@ export default class App extends Component {
       email: this.state.user.email
     });
   }
+  
+  aliasPress() {
+    analytics.alias(this.state.user.userId);
+  }
 
   screenPress() {
     analytics.screen('Ultimate Comics Spider-Man, Vol. 1', {
@@ -82,8 +86,12 @@ export default class App extends Component {
     })
   }
 
-  aliasPress() {
-    analytics.alias(this.state.user.userId);
+  groupPress() {
+    analytics.group('0e8c78ea9d97a7b8185e8632', {
+      name: 'Springfield Nuclear Power Plant',
+      employees: 117,
+      plan: 'enterprise'
+    })
   }
 
   flushPress() {
@@ -188,6 +196,11 @@ export default class App extends Component {
               buttonStyle={styles.button}
               onPress={() => this.screenPress()}
               title="Screen"
+            />
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.groupPress()}
+              title="Group"
             />
             <Button
               buttonStyle={styles.button}
