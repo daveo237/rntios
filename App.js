@@ -82,6 +82,10 @@ export default class App extends Component {
     })
   }
 
+  aliasPress() {
+    analytics.alias(this.state.user.userId);
+  }
+
   flushPress() {
     analytics.flush()
   }
@@ -174,6 +178,11 @@ export default class App extends Component {
               buttonStyle={styles.button}
               onPress={() => this.identifyPress()}
               title={"Identify" + user}
+            />
+            <Button
+              buttonStyle={styles.button}
+              onPress={() => this.aliasPress()}
+              title={"Alias"}
             />
             <Button
               buttonStyle={styles.button}
