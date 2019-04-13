@@ -651,10 +651,10 @@
   version "0.0.0"
   resolved "https://codeload.github.com/segmentio/analytics-ios/tar.gz/efb4cd1771dab568422473fd680ffb748b102f07"
 
-"@segment/analytics-react-native@^0.0.1-beta.5":
-  version "0.0.1-beta.5"
-  resolved "https://registry.yarnpkg.com/@segment/analytics-react-native/-/analytics-react-native-0.0.1-beta.5.tgz#c0d091cdc1b8238b22abff20402653c546317271"
-  integrity sha512-la4L6lTJLDfO9GMxYGnDMA+au/QjkL649LinycerJ+7/fBv35Zgz4YZc/pQsOlNyEeRwCtJ4HeuEDdjeOuvIfg==
+"@segment/analytics-react-native@^0.1.0-beta.0":
+  version "0.1.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@segment/analytics-react-native/-/analytics-react-native-0.1.0-beta.0.tgz#fb1c5ff9f72d6946b263777943af7d7abb157694"
+  integrity sha512-hIVs10hZn7i13BqKu/ikHhgOZUwXCFjjy61DFFsZbD7d/3Xi/X810TjQva+lBH1E27kbp+WIJ8nh+UzWlKTjPw==
 
 abab@^2.0.0:
   version "2.0.0"
